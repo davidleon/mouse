@@ -141,7 +141,9 @@ def listen(queue):
         t = time.time()
 
         if wParam == WM_MOUSEMOVE:
-            event = MoveEvent(struct.x, struct.y, t)
+            point = POINT()
+            user32.GetCursorPos(byref(point))
+            event = MoveEvent(point.x, point.y, t)
         elif wParam == WM_MOUSEWHEEL:
             event = WheelEvent(struct.data / (WHEEL_DELTA * (2<<15)), t)
         elif wParam in buttons_by_wm_code:
